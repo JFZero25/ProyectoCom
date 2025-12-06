@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitoreo de Fauna</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1a1a2e;
+        color: #eee;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      header h1 {
+        font-size: 2rem;
+        color: #4ecca3;
+        margin-bottom: 8px;
+      }
+
+      header p {
+        color: #888;
+      }
+
+      .debug {
+        background: #2a2a3e;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: #4ecca3;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        background: #16213e;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card:active {
+        transform: translateY(-2px);
+        background: #1a2a4a;
+      }
+
+      .card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+
+      .card-info {
+        padding: 16px;
+      }
+
+      .especie {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #4ecca3;
+        margin-bottom: 8px;
+      }
+
+      .accion {
+        color: #ccc;
+        font-size: 1rem;
+        margin-bottom: 12px;
+        line-height: 1.4;
+      }
+
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .confianza {
+        background: #4ecca3;
+        color: #1a1a2e;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 60px;
+        color: #888;
+      }
+
+      .error {
+        text-align: center;
+        padding: 60px;
+        color: #e74c3c;
+      }
+
+      .no-data {
+        text-align: center;
+        padding: 60px;
+        color: #888;
+      }
+
+      button {
+        background: #4ecca3;
+        color: #1a1a2e;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🦊 Monitoreo de Fauna</h1>
+        <p>Últimos avistamientos detectados</p>
+      </header>
+
+      <!-- Panel de debug -->
+      <div class="debug" id="debug">🔍 Debug: Iniciando...</div>
+
+      <!-- Botones de prueba -->
+      <div style="text-align: center; margin-bottom: 20px">
+        <button onclick="testBridge()">🧪 Test Bridge</button>
+        <button onclick="testAlert()">⚠️ Test Alert</button>
+        <button onclick="recargar()">🔄 Recargar</button>
+      </div>
+
+      <div id="contenido" class="grid">
+        <div class="loading">Cargando avistamientos...</div>
+      </div>
+    </div>
+
+    <script>
+      const API_URL = "http://98.86.218.95:8000";
+      let debugCount = 0;
+
+      // Función de debug que escribe en el panel
+      function debug(mensaje) {
+        debugCount++;
+        const debugDiv = document.getElementById("debug");
+        const timestamp = new Date().toLocaleTimeString();
+        console.log(`[${timestamp}] ${mensaje}`);
+        debugDiv.innerHTML = `[${debugCount}] ${timestamp}: ${mensaje}`;
+      }
+
+      debug("✅ JavaScript cargado");
+
+      // Test del bridge
+      function testBridge() {
+        debug("🧪 Probando bridge...");
+        try {
+          if (typeof Android !== "undefined") {
+            debug("✅ Android existe!");
+            if (typeof Android.testBridge === "function") {
+              Android.testBridge("Hola desde JavaScript!");
+              debug("✅ Bridge llamado con éxito");
+            } else {
+              debug("❌ Android.testBridge no es función");
+            }
+          } else {
+            debug("❌ Android NO está definido");
+            alert("Android bridge no disponible");
+          }
+        } catch (error) {
+          debug("❌ Error: " + error.message);
+          alert("Error: " + error.message);
+        }
+      }
+
+      // Test de alert
+      function testAlert() {
+        alert("¡Alert funciona!");
+        debug("✅ Alert mostrado");
+      }
+
+      // Recargar página
+      function recargar() {
+        debug("🔄 Recargando...");
+        location.reload();
+      }
+
+      // Función para manejar el click
+      function clickCard(id) {
+        debug(`👆 Click en tarjeta ID: ${id}`);
+
+        try {
+          if (typeof Android !== "undefined" && Android.mostrarDetalles) {
+            debug("📞 Llamando Android.mostrarDetalles...");
+            Android.mostrarDetalles(id);
+            debug("✅ Llamada exitosa");
+          } else {
+            debug("❌ Android bridge no disponible");
+            alert("Android bridge no disponible. ID: " + id);
+          }
+        } catch (error) {
+          debug("❌ Error: " + error.message);
+          alert("Error: " + error.message);
+        }
+      }
+
+      // Cargar avistamientos
+      async function cargarAvistamientos() {
+        debug("📡 Cargando avistamientos...");
+        const contenido = document.getElementById("contenido");
+
+        try {
+          const response = await fetch(`${API_URL}/avistamientos?limite=3`);
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const resultado = await response.json();
+          const avistamientos = resultado.data;
+
+          debug(`✅ ${avistamientos.length} avistamientos cargados`);
+
+          if (avistamientos.length === 0) {
+            contenido.innerHTML = `
+              <div class="no-data">
+                No hay avistamientos registrados aún
+              </div>
+            `;
+            return;
+          }
+
+          contenido.innerHTML = avistamientos
+            .map((av) => {
+              return `
+                <div class="card" onclick="clickCard('${av.id}')">
+                    <img src="${API_URL}${av.imagen_url}" alt="${av.especie}">
+                    <div class="card-info">
+                        <div class="especie">${av.especie}</div>
+                        <div class="accion">${av.accion}</div>
+                        <div class="meta">
+                            <span>${formatearFecha(av.timestamp)}</span>
+                            <span class="confianza">${Math.round(
+                              av.confianza * 100
+                            )}%</span>
+                        </div>
+                    </div>
+                </div>
+              `;
+            })
+            .join("");
+
+          debug("✅ Tarjetas renderizadas");
+        } catch (error) {
+          debug(`❌ Error: ${error.message}`);
+          contenido.innerHTML = `
+            <div class="error">
+              Error: ${error.message}<br>
+              <small>Verifica que el servidor esté corriendo</small>
+            </div>
+          `;
+        }
+      }
+
+      function formatearFecha(isoString) {
+        const fecha = new Date(isoString);
+        return fecha.toLocaleDateString("es-CL", {
+          day: "numeric",
+          month: "short",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      // Verificar Android al cargar
+      window.addEventListener("load", function () {
+        debug("📱 Página cargada completamente");
+
+        if (typeof Android !== "undefined") {
+          debug("✅ Android bridge disponible");
+        } else {
+          debug("⚠️ Android bridge NO disponible (¿navegador web?)");
+        }
+      });
+
+      // Cargar al inicio
+      debug("🚀 Iniciando carga...");
+      cargarAvistamientos();
+
+      // Recargar cada 10 segundos (más lento para debug)
+      setInterval(() => {
+        debug("🔄 Auto-recarga...");
+        cargarAvistamientos();
+      }, 10000);
+    </script>
+  </body>
+</html>

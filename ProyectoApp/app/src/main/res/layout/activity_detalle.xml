@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a1a2e"
+    android:fillViewport="true"
+    tools:context=".DetalleActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📋 Detalles del Avistamiento"
+            android:textColor="#4ecca3"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Card Container -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="#16213e"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Especie -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🦊"
+                        android:textSize="24sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtEspecie"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Especie: Cargando..."
+                        android:textColor="#eee"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2a2a3e"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Acción -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎬"
+                        android:textSize="24sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtAccion"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Acción: Cargando..."
+                        android:textColor="#ccc"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2a2a3e"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Confianza -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📊"
+                        android:textSize="24sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtConfianza"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confianza: Cargando..."
+                        android:textColor="#4ecca3"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2a2a3e"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Fecha -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📅"
+                        android:textSize="24sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtFecha"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Fecha: Cargando..."
+                        android:textColor="#ccc"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2a2a3e"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Dispositivo -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📱"
+                        android:textSize="24sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtDispositivo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Dispositivo: Cargando..."
+                        android:textColor="#888"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Botón Cerrar -->
+        <Button
+            android:id="@+id/btnCerrar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Cerrar"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#4ecca3"
+            android:textColor="#1a1a2e"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>
